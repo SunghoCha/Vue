@@ -1,28 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>끝말잇기</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
-<body>
+
+<body> 
+    <!-- 보통 컴포넌트는 인스턴보다는 위에 위치함. 스크립트는 div#root보다는 아래에 위치함-->
     <!-- 작성 순서 : 태그들을 먼저 만들고 바뀌는 부분을 data로 만들자 -->
     <div id="root">
-        <div>{{word}}</div>
-        <form v-on:submit="onSubmitForm">
-            <input type="text" ref="answer" v-model="value">
-            <button type="submit">입력!</button>
-        </form>
-        <div>{{result}}</div>
+        <word-relay start-word="제로초"></word-relay>
+        <word-relay start-word="초밥"></word-relay>
+        <word-relay start-word="밥차"></word-relay>
     </div>
-    <script>
-        const app = new Vue({
-            el: '#root',
-            data: {
-                word: '제로초',
-                result: '',
-                value: '',
+    <script> //template 최상단에는 모든걸 감싸는 부모태그가 하나 있어야함. 보통  <template></template>로 함
+        Vue.component('word-relay', { // 전역 컴포넌트
+            template: `  
+            <div>
+                <div>{{word}}</div>
+                <form v-on:submit="onSubmitForm">
+                    <input type="text" ref="answer" v-model="value">
+                    <button type="submit">입력!</button>
+                </form>
+                <div>{{result}}</div>
+            </div>
+            `,
+            props: ['startWord'],
+            data() {
+                return {
+                    word: this.startWord,
+                    result: '',
+                    value: '',
+                };
             },
             methods: {
                 onSubmitForm(e) {
@@ -37,9 +49,15 @@
                         this.value = '';
                         this.$refs.answer.focus();
                     }
-                }
-            },
+                },
+            }
+        })
+    </script>
+    <script>
+        const app = new Vue({
+            el: '#root',     
         });
     </script>
 </body>
+
 </html>
