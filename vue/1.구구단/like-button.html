@@ -1,0 +1,29 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>좋아요</title>
+    <script src="https:/cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <div v-if="liked">좋아요 눌렀음</div>  <!-- v가 붙어 있으면 Vue가 통제하고 있다는 의미. ""안에는 method나 data에 접근 가능, js의 코드도 사용가능 --> 
+        <!-- <div>v-조건문 사이에 데이터 들어오면 v-조건문 적용안됨</div> -->
+        <button v-else v-on:click="onClickButton">Like</button> <!-- if와 else의 scope는 동등한 형제고 붙어있으면 적용됨 (v-else-if도 있음)-->
+    </div>
+    
+</body>
+<script>
+    const app = new Vue({
+        el: '#root', //el, data, methods는 정해진 변수명
+        data: {
+            liked: false,
+        },
+        methods: {
+            onClickButton() {
+                this.liked = true; // this는 data를 가리킴
+            },
+        },
+    });
+</script>
+</html>
