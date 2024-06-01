@@ -4,22 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>끝말잇기</title>
-    <script src="https//cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <body>
     <!-- 작성 순서 : 태그들을 먼저 만들고 바뀌는 부분을 data로 만들자-->
-    <div id="#root">
-        <div></div>
-        <form>
-            <input type="text">
+    <div id="root">
+        <div>{{word}}</div>
+        <form v-on:submit="onSubmitForm">
+            <input type="text" ref="answer" v-model="value">
             <button type="submit">입력!</button>
         </form>
+        <div>{{result}}</div>
     </div>
     <script>
         const app = new Vue({
             el: '#root',
-            data: {},
-            methods: {},
+            data: {
+                word: '제로초',
+                result: '',
+                value: '',
+            },
+            methods: {
+                onSubmitForm(e) {
+                    e.preventDefault();
+                    if (this.word[this.word.length - 1] === this.value[0]) {
+                        this.result = "딩동댕";
+                        this.word = this.value;
+                        this.value = '';
+                        this.$refs.answer.focus();
+                    } else {
+                        this.result = "땡";
+                        this.value = '';
+                        this.$refs.answer.focus();
+                    }
+                }
+            },
         });
     </script>
 </body>
