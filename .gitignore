@@ -1,3 +1,5 @@
 /html
 /javaScript
 /jquery
+node_modules
+dist
